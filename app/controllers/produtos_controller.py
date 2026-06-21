@@ -10,21 +10,17 @@ def obter_produto(produto_id):
 
 
 def salvar_produto(nome, preco, categoria_id, produto_id=None):
-
     if not nome or not nome.strip():
         return False, "O nome do produto é obrigatório."
-    
-
+   
     if preco <=0:
         return False, "O preço deve ser maior que zero."
     
     categoria = Categoria.query.get(categoria_id)
 
-
     if not categoria:
         return False, "Cagoria inválida."
-    
-
+  
     try:
 
         if produto_id:
@@ -37,14 +33,12 @@ def salvar_produto(nome, preco, categoria_id, produto_id=None):
 
 
         else:
-            produto= Produto(nome=nome.strip(), preco=preco, categoria_id=categoria_id)
+            produto= Produto(nome=nome.strip(), preco=preco, categoria_id=categoria.id)
             db.session.add(produto)
-
             mensagem = "Produto cadastrado com sucesso!"
 
         db.session.commit()
         return True, mensagem
-
 
     except Exception as e:
         db.session.rollback()

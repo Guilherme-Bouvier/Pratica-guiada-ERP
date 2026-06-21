@@ -1,1 +1,1 @@
-from .web_db import web_db
+from .web_bp import web_bp

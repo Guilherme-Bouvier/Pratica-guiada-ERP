@@ -14,7 +14,7 @@
                         {% endif %}
                     </h4>
                  </div>
-                <div class="card-bode p4">
+                <div class="card-body p4">
                     <form method="POST">
                         <div class="mb-3">
                             <label class="form-label fw-bold">
@@ -28,7 +28,7 @@
                             <label class="form-label fw-bold">
                                 Preço da Venda (R$)
                             </label>
-                            <input type="number" name="preco" step="0.01" class="form-control"value=" 
+                            <input type="number" name="preco" min="0.00" step="0.01" class="form-control"value=" 
                             {{ produto.preco if produto else ''}}" required placeholder="0.00">
 
                         </div>
@@ -39,7 +39,7 @@
                             <select name="categoria_id" class="form-select" required>
                                 <option value=""> Selecione uma categoria abaixo.... </option>
 
-                                {% for categoria in categoria %}
+                                {% for categoria in categorias %}
                                     <option value="{{ categoria.id }}" {% if produto and produto.
                                     categoria_id == catefgoria.id %} selected {% endif %}> {{ categoria.nome}}</option>
                                     {% endfor %}

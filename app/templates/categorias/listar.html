@@ -1,6 +1,7 @@
 {% extends "base.html" %} 
 
  {% block content %}
+
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <h2 class="h3 text-secondary">
@@ -9,13 +10,12 @@
         <a href="{{ url_for('web.nova_categoria_view')}}" class="btn btn-success shadow-sm">
             <i class="bi bi-tag"></i> Adicionar Categoria
         </a>  
-    </div>
-    <div class="card shadow border-0">
-       
-        <div class="card-body p-0">
-           
-            <table class="table table-hover table-striped mb-0 text-center align-middle">
 
+    </div>
+
+    <div class="card shadow border-0">
+        <div class="card-body p-0">
+           <table class="table table-hover table-striped mb-0 text-center align-middle">
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
@@ -23,42 +23,33 @@
                         <th>Produtos Vinculados</th>
                         <th>Ações</th>
                     </tr>
-
                 </thead>
-
                 <tbody>
                     {% for categoria in categorias %}
 
                         <tr>
-                            <td class="fw-bold"> {{ categoria.id }}</td>
+                            <td class="fw-bold">{{ categoria.id }}</td>
                             <td >{{ categoria.nome }}</td>
                             <td>
                                 <span class="badge bg-secondary">
                                     {{ categoria.produtos|length }} itens
                                 </span>
-                            
                             </td>
-
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="{{ url_for('web.editar_categoria_view', id=categoria.id)}}
-                                    " class="btn btn-sm btn-outline-primary">
+                                    <a href="{{ url_for('web.editar_categoria_view', id=categoria.id)}}" class="btn btn-sm btn-outline-primary">
                                         <i class="bi bi-pencil"></i>
                                     </a>
-                                    <form action="{{ url_for('web.excluir_categoria_view', id=categoria.id) }}" method="DELETE" onsubmit="return" confirm ('Excluir a categoria {{categoria.nome}}?');>
+               
+                                    <form action="{{ url_for('web.excluir_categoria_view', id=categoria.id) }}" method="DELETE" onsubmit="return confirm ('Excluir a categoria {{categoria.nome}}?');">
                                         <button class="btn btn-sm btn-outline-danger">
                                             <i class="bi bi-trash"></i>
                                         </button>
-                                    
                                     </form>
-
-
-                                    
                                 </div>
                             
                             </td>
                         </tr>
-
 
                     {% else %}
                         <tr>
@@ -66,14 +57,12 @@
                                 Nenhuma categoria adicionada.
                             </td>
                         </tr>
-
                     {% endfor %}           
-
                 </tbody>
             </table>
         </div>
     
     </div>
 
-{% endblock content %}
+{% endblock %}
   
