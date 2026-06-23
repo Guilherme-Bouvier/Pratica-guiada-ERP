@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 from dotenv import load_dotenv
-from app.extenssion import db
+from app.extensions import db
 from app.routes import web_bp
 
 load_dotenv()

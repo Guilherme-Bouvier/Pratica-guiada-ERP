@@ -1,7 +1,7 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
 
 {% block content %}
-    <div class="row justify-conent-center">
+    <div class="row justify-content-center">
         <div class="col-md-5">
             <div class="card shadow border-0">
                 <div class="card-header bg-white py-3 text-center">
@@ -10,23 +10,23 @@
                             Editar Categoria
                         {% else %}
                             Nova Categoria
-                        {% endif%}
-                    </h4>
+                        {% endif %}
+                    </h4>                
                 </div>
-                
+
                 <div class="card-body p-4">
                     <form method="POST">
                         <div class="mb-4">
                             <label class="form-label fw-bold">
-                                Nova Categoria
+                                Nome da Categoria
                             </label>
-                            <input type="text" name="nome_categoria" class="form-control" value="{{ categoria.nome if categoria else ''}}" required placeholder="Ex.Informatica">
+                            <input type="text" name="nome_categoria" class="form-control" value="{{ categoria.nome if categoria else ''}}" required placeholder="Ex: Informática">
                         </div>
-                        <div class="d-lex justify-content-between">
-                            <a href="{{ url_for('web.listar_categorias_view') }}" class="btn btn-outline-secundary">
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('web.listar_categorias_view') }}" class="btn btn-outline-secondary">
                                 Voltar
-                            </a>
-                            <button type="subtmit" class="btn btn-success px-4 shadow-sm">
+                            <a>
+                            <button type="submit" class="btn btn-success px-4 shadow-sm">
                                 Salvar Categoria
                             </button>
                         </div>
@@ -37,4 +37,4 @@
         </div>
     
     </div>
-{% endblock %}
+{% endblock  %}

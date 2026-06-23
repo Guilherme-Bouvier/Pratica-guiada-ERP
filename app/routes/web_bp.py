@@ -42,21 +42,22 @@ def editar_produto_view(id):
         preco = float(request.form.get("preco", 0))
         categoria_id = int(request.form.get("categoria_id", 0))
 
-        sucesso, msg =produtos_controller.salvar_produto(nome, preco, categoria_id, produto_id = id)
+        sucesso, msg = produtos_controller.salvar_produto(nome, preco, categoria_id, produto_id = id)
 
-        flash (msg, "success" if sucesso else "danger")
+        flash(msg, "success" if sucesso else "danger")
 
         if sucesso:
-            return redirect(url_for('web.listar_produtos_view'))
+            return redirect(url_for("web.listar_produtos_view"))
         
     return render_template("produtos/form.html", produto=produto, categorias=categorias)
+        
 
 
 @web_bp.route("/produtos/excluir/<int:id>", methods=["POST"])
 def excluir_produto_view(id):
     sucesso, msg = produtos_controller.excluir_produto(id)
-    flash(msg, "success" if sucesso else "danger") 
-    return redirect(url_for('web.listar_produtos_view'))
+    flash(msg, "success" if sucesso else "danger")
+    return redirect(url_for("web.listar_produtos_view"))
 
 
 # ROTAS DE CATEGORIAS
@@ -85,10 +86,11 @@ def nova_categoria_view():
 @web_bp.route("/categorias/excluir/<int:id>", methods=["POST"])
 def excluir_categoria_view(id):
     sucesso, msg = categoria_controller.excluir_categoria(id)
-    flash(msg, "success" if sucesso else "danger") 
-    return redirect(url_for('web.listar_categorias_view'))
+    flash(msg, "success" if sucesso else "danger")
+    return redirect(url_for("web.listar_categorias_view"))
 
-@web_bp.route("/categorias/editar/<int:id>", methods = ["GET", "POST"])
+
+@web_bp.route("/categorias/editar/<int:id>", methods=["GET", "POST"])
 def editar_categoria_view(id):
     categoria = categoria_controller.obter_categoria(id)
 
@@ -100,5 +102,6 @@ def editar_categoria_view(id):
         flash(msg, "success" if sucesso else "danger")
 
         if sucesso:
-            return redirect(url_for('web.listar_categorias_view'))
+            return redirect(url_for("web.listar_categorias_view"))
+    
     return render_template("categorias/form.html", categoria=categoria)
