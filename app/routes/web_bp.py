@@ -106,15 +106,18 @@ def editar_categoria_view(id):
     
     return render_template("categorias/form.html", categoria=categoria)
 
-#routas usuarios
+
+# ROTAS DE USUÁRIOS
+
 @web_bp.route("/usuarios")
 def listar_usuarios_view():
     usuarios = usuarios_controller.listar_todos_usuarios()
-    return render_template("usuarios/listar.html",usuarios=usuarios)
+    return render_template("usuarios/listar.html", usuarios=usuarios)
 
-@web_bp.route("/usuarios/novo", methods= ["GET", "POST"])
+
+@web_bp.route("/usuarios/novo", methods=["GET", "POST"])
 def novo_usuario_view():
-    if request.method== "POST":
+    if request.method == "POST":
         nome = request.form.get("nome")
         email = request.form.get("email")
         senha = request.form.get("senha")
@@ -124,17 +127,15 @@ def novo_usuario_view():
         flash(msg, "success" if sucesso else "danger")
 
         if sucesso:
-            return redirect(url_for('web.listar_usuarios_view'))
-        
+            return redirect(url_for("web.listar_usuarios_view"))
+    
     return render_template("usuarios/form.html", usuario=None)
 
 
-@web_bp.route("/usuarios/editar/<int:id>", methods= ["GET", "POST"])
-def editar_usuario_view():
-
-    usuario= usuarios_controller.obter_usuario(id)
-
-    if request.method== "POST":
+@web_bp.route("/usuarios/editar/<int:id>", methods=["GET", "POST"])
+def editar_usuario_view(id):
+    usuario = usuarios_controller.obter_usuario(id)
+    if request.method == "POST":
         nome = request.form.get("nome")
         email = request.form.get("email")
         senha = request.form.get("senha")
@@ -144,15 +145,15 @@ def editar_usuario_view():
         flash(msg, "success" if sucesso else "danger")
 
         if sucesso:
-            return redirect(url_for('web.listar_usuarios_view'))
-        
+            return redirect(url_for("web.listar_usuarios_view"))
+    
     return render_template("usuarios/form.html", usuario=usuario)
 
 
-@web_bp.route("/usuarios/excluir/<int:id>", methods= ["POST"])
+@web_bp.route("/usuarios/excluir/<int:id>", methods=["POST"])
 def excluir_usuario_view(id):
     sucesso, msg = usuarios_controller.excluir_usuario(id)
 
     flash(msg, "success" if sucesso else "danger")
 
-    return render_template('web.listar_usuario_view')
+    return redirect(url_for("web.listar_usuarios_view"))
