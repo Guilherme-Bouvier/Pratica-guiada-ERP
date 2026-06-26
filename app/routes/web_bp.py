@@ -4,16 +4,54 @@ from app.controllers import (produtos_controller, categoria_controller, usuarios
 
 web_bp = Blueprint("web", __name__)
 
+#rota dashboard
+
 @web_bp.route("/")
-def index():
-    return redirect(url_for("web.listar_produtos_view"))
+def dashboard_view():
+
+    produtos = produtos_controller.listar_todos_produtos()
+    categorias = categoria_controller.listar_todas_categorias()
+    usuarios = usuarios_controller.listar_todos_usuarios()
+
+    total_produtos = len(produtos)
+    total_categorias = len(categorias)
+    total_usuarios = len(usuarios)
+
+    return render_template(
+        "dashboard.html",
+        total_produtos=total_produtos,
+        total_categorias=total_categorias,
+        total_usuarios=total_usuarios
+    )
 
 # ROTAS DE PRODUTOS
 
 @web_bp.route("/produtos")
 def listar_produtos_view():
-    produtos = produtos_controller.listar_todos_produtos()
-    return render_template("produtos/listar.html", produtos=produtos)
+
+     # 1. Pega a página atual da URL (?page=1, ?page=2...)
+    page = request.args.get("page", 1, type=int)
+
+    # 2. Quantos itens por página
+    per_page = 10
+
+    # 3. Busca todos os produtos (simples, do controller)
+    todos_produtos = produtos_controller.listar_todos_produtos()
+
+    # 4. Calcula os limites da página
+    inicio = (page - 1) * per_page
+    fim = inicio + per_page
+
+    
+    # 5. Recorta apenas os produtos da página atual
+    produtos = todos_produtos[inicio:fim]
+
+    # 6. (opcional, mas recomendado) total de páginas
+    total_pages = (len(todos_produtos) + per_page - 1) // per_page
+    
+    # 7. Renderiza o template
+    return render_template("produtos/listar.html", produtos=produtos, page=page,
+        total_pages=total_pages)
 
 @web_bp.route("/produto/novo", methods=["GET", "POST"])
 def novo_produto_view():
